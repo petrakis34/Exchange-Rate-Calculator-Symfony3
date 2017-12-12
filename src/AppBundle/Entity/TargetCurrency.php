@@ -23,7 +23,7 @@ class TargetCurrency
     private $target_cur_name;
 
     /**
-     * @ORM\Column(type="decimal", scale=4)
+     * @ORM\Column(type="decimal", precision=5, scale=4)
      */
     private $target_value;
 

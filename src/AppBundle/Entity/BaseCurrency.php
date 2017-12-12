@@ -23,7 +23,7 @@ class BaseCurrency
     private $base_cur_name;
 
     /**
-     * @ORM\Column(type="integer", default="1")
+     * @ORM\Column(type="integer", options={"default" : 1}))
      */
     private $base_value;
 
