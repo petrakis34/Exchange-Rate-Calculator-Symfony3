@@ -24,58 +24,55 @@ class DefaultController extends Controller
         ]);
     }
 
-    //Create Base Currency
+    //Create Currency pair
         public function createCurrencyAction()
     {
         // you can fetch the EntityManager via $this->getDoctrine()
         // or you can add an argument to your action: createAction(EntityManagerInterface $em)
         $em = $this->getDoctrine()->getManager();
 
-        $Currency = new Currency();
-        $Currency->setBaseName('EURO');
-        $Currency->setTargetName('USD');
-        $Currency->setTargetPrice(1.2079);
+        $currency = new Currency();
+        $currency->setBaseName('EURO');
+        $currency->setTargetName('USD');
+        $currency->setTargetPrice(1.2079);
 
 
         // tells Doctrine you want to (eventually) save the Product (no queries yet)
-        $em->persist($Currency);
+        $em->persist($currency);
 
         // actually executes the queries (i.e. the INSERT query)
         $em->flush();
 
-        return new Response('Saved new pair of Currencies with id '.$Currency->getId());
+        return new Response('Saved new pair of Currencies with id '.$currency->getId());
+    }
+
+    // if you have multiple entity managers, use the registry to fetch them
+    public function editAction()
+    {
+        $doctrine = $this->getDoctrine();
+        $em = $doctrine->getManager();
+        $em2 = $doctrine->getManager('other_connection');
     }
 
 
+    // Show Currency pair
+    public function showCurrencyAction($currencyId)
+         {
+         $currency = $this->getDoctrine()
+             ->getRepository(Currency::class)
+             ->find($currencyId);
 
+         if (!$currency) {
+             throw $this->createNotFoundException(
+                 'No product found for id '.$currencyId
+             );
+         }
 
-    // if you have multiple entity managers, use the registry to fetch them
-    // public function editAction()
-    // {
-    //     $doctrine = $this->getDoctrine();
-    //     $em = $doctrine->getManager();
-    //     $em2 = $doctrine->getManager('other_connection');
-    // }
+         //return new Response($product->getName());
+         // ... do something, like pass the $product object into a template
 
-
-
-    // public function showAction($productId)
-    //     {
-    //     $product = $this->getDoctrine()
-    //         ->getRepository(Product::class)
-    //         ->find($productId);
-
-    //     if (!$product) {
-    //         throw $this->createNotFoundException(
-    //             'No product found for id '.$productId
-    //         );
-    //     }
-
-    //     //return new Response($product->getName());
-    //     // ... do something, like pass the $product object into a template
-
-    //     return $this->render('default/show.html.twig', array ('product' => $product));
-    // }
+         return $this->render('default/show.html.twig', array ('currency' => $currency));
+    }
 
 
 
