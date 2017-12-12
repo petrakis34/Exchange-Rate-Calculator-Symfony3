@@ -63,12 +63,14 @@ class TargetCurrency
         return $this->targetName;
     }
 
+
+
     /**
      * Set target_value
      *
      * @param string $target_value
      *
-     * @return targetCurrency
+     * @return TargetCurrency
      */
     public function setTargetPrice($target_value)
     {
