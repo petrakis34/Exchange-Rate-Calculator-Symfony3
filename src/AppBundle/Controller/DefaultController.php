@@ -34,6 +34,8 @@ class DefaultController extends Controller
 
         $baseCurrency = new BaseCurrency();
         $baseCurrency->setBaseName('EURO');
+        $baseCurrency->setBasePrice(1);
+
 
         // tells Doctrine you want to (eventually) save the Product (no queries yet)
         $em->persist($baseCurrency);
@@ -70,49 +72,49 @@ class DefaultController extends Controller
 
 
     // if you have multiple entity managers, use the registry to fetch them
-    public function editAction()
-    {
-        $doctrine = $this->getDoctrine();
-        $em = $doctrine->getManager();
-        $em2 = $doctrine->getManager('other_connection');
-    }
+    // public function editAction()
+    // {
+    //     $doctrine = $this->getDoctrine();
+    //     $em = $doctrine->getManager();
+    //     $em2 = $doctrine->getManager('other_connection');
+    // }
 
 
 
-    public function showAction($productId)
-        {
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->find($productId);
+    // public function showAction($productId)
+    //     {
+    //     $product = $this->getDoctrine()
+    //         ->getRepository(Product::class)
+    //         ->find($productId);
 
-        if (!$product) {
-            throw $this->createNotFoundException(
-                'No product found for id '.$productId
-            );
-        }
+    //     if (!$product) {
+    //         throw $this->createNotFoundException(
+    //             'No product found for id '.$productId
+    //         );
+    //     }
 
-        //return new Response($product->getName());
-        // ... do something, like pass the $product object into a template
+    //     //return new Response($product->getName());
+    //     // ... do something, like pass the $product object into a template
 
-        return $this->render('default/show.html.twig', array ('product' => $product));
-    }
+    //     return $this->render('default/show.html.twig', array ('product' => $product));
+    // }
 
 
 
-    public function updateAction($productId)
-    {
-    $em = $this->getDoctrine()->getManager();
-    $product = $em->getRepository(Product::class)->find($productId);
+    // public function updateAction($productId)
+    // {
+    // $em = $this->getDoctrine()->getManager();
+    // $product = $em->getRepository(Product::class)->find($productId);
 
-    if (!$product) {
-        throw $this->createNotFoundException(
-            'No product found for id '.$productId
-        );
-    }
+    // if (!$product) {
+    //     throw $this->createNotFoundException(
+    //         'No product found for id '.$productId
+    //     );
+    // }
 
-    $product->setName('NEWKEYBOARD');
-    $em->flush();
+    // $product->setName('NEWKEYBOARD');
+    // $em->flush();
 
-    return $this->redirectToRoute('homepage');
-    }
+    // return $this->redirectToRoute('homepage');
+    // }
 }

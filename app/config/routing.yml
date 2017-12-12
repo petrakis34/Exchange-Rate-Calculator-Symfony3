@@ -4,4 +4,4 @@ app:
 
 create_currency:
     path: /create_currency
-    defaults: { _controller: AppBundle:Default:createBaseCurrency }
+    defaults: { _controller: AppBundle:Default:createBaseCurrency } 

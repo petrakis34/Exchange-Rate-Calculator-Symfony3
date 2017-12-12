@@ -36,11 +36,11 @@ class BaseCurrency
      */
     public function getBaseId()
     {
-        return $this->baseId;
+        return $this->id;
     }
 
     /**
-     * Set baseName
+     * Set base_cur_name
      *
      * @param string $base_cur_name
      *
@@ -48,19 +48,34 @@ class BaseCurrency
      */
     public function setBaseName($base_cur_name)
     {
-        $this->baseName = $base_cur_name;
+        $this->base_cur_name = $base_cur_name;
 
         return $this;
     }
 
     /**
-     * Get baseName
+     * Get base_cur_name
      *
      * @return string
      */
     public function getBaseName()
     {
-        return $this->baseName;
+        return $this->base_cur_name;
+    }
+
+
+    /**
+     * Set base_value
+     *
+     * @param string $base_value
+     *
+     * @return BaseCurrency
+     */
+    public function setBasePrice($base_value)
+    {
+        $this->base_value = $base_value;
+
+        return $this;
     }
 
     /**

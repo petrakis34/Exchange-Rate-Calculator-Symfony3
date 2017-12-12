@@ -36,11 +36,11 @@ class TargetCurrency
      */
     public function getTargetId()
     {
-        return $this->targetId;
+        return $this->id;
     }
 
     /**
-     * Set targetName
+     * Set target_cur_name
      *
      * @param string $target_cur_name
      *
@@ -48,19 +48,19 @@ class TargetCurrency
      */
     public function setTargetName($target_cur_name)
     {
-        $this->targetName = $target_cur_name;
+        $this->target_cur_name = $target_cur_name;
 
         return $this;
     }
 
     /**
-     * Get targetName
+     * Get target_cur_name
      *
      * @return string
      */
     public function getTargetName()
     {
-        return $this->targetName;
+        return $this->target_cur_name;
     }
 
 
@@ -74,7 +74,7 @@ class TargetCurrency
      */
     public function setTargetPrice($target_value)
     {
-        $this->targetPrice = $target_value;
+        $this->target_value = $target_value;
 
         return $this;
     }
