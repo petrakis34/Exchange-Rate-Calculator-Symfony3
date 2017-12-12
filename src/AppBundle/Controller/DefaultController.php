@@ -6,8 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use AppBundle\Entity\BaseCurrency;
-use AppBundle\Entity\TargetCurrency;
+use AppBundle\Entity\Currency;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -26,46 +25,25 @@ class DefaultController extends Controller
     }
 
     //Create Base Currency
-        public function createBaseCurrencyAction()
+        public function createCurrencyAction()
     {
         // you can fetch the EntityManager via $this->getDoctrine()
         // or you can add an argument to your action: createAction(EntityManagerInterface $em)
         $em = $this->getDoctrine()->getManager();
 
-        $baseCurrency = new BaseCurrency();
-        $baseCurrency->setBaseName('EURO');
-        $baseCurrency->setBasePrice(1);
+        $Currency = new Currency();
+        $Currency->setBaseName('EURO');
+        $Currency->setTargetName('USD');
+        $Currency->setTargetPrice(1.2079);
 
 
         // tells Doctrine you want to (eventually) save the Product (no queries yet)
-        $em->persist($baseCurrency);
+        $em->persist($Currency);
 
         // actually executes the queries (i.e. the INSERT query)
         $em->flush();
 
-        return new Response('Saved new baseCurrency with id '.$baseCurrency->getBaseId());
-    }
-
-
-
-    //Create Target Currency
-     public function createTargetCurrencyAction()
-    {
-        // you can fetch the EntityManager via $this->getDoctrine()
-        // or you can add an argument to your action: createAction(EntityManagerInterface $em)
-        $em = $this->getDoctrine()->getManager();
-
-        $targetCurrency = new TargetCurrency();
-        $targetCurrency->setTargetName('USD');
-        $targetCurrency->setTargetPrice(1.2079);
-
-        // tells Doctrine you want to (eventually) save the Product (no queries yet)
-        $em->persist($targetCurrency);
-
-        // actually executes the queries (i.e. the INSERT query)
-        $em->flush();
-
-        return new Response('Saved new targetCurrency with id '.$targetCurrency->getTargetId());
+        return new Response('Saved new pair of Currencies with id '.$Currency->getId());
     }
 
 
