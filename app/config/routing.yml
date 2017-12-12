@@ -9,3 +9,7 @@ create_currency:
 show_currency:
     path: /show_currency/{currencyId}
     defaults: { _controller: AppBundle:Default:showCurrency }
+
+uodate_currency:
+    path: /update_currency/{currencyId}
+    defaults: { _controller: AppBundle:Default:updateCurrency }

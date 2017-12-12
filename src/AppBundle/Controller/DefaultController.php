@@ -47,12 +47,12 @@ class DefaultController extends Controller
     }
 
     // if you have multiple entity managers, use the registry to fetch them
-    public function editAction()
-    {
-        $doctrine = $this->getDoctrine();
-        $em = $doctrine->getManager();
-        $em2 = $doctrine->getManager('other_connection');
-    }
+    // public function editAction()
+    // {
+    //     $doctrine = $this->getDoctrine();
+    //     $em = $doctrine->getManager();
+    //     $em2 = $doctrine->getManager('other_connection');
+    // }
 
 
     // Show Currency pair
@@ -68,28 +68,28 @@ class DefaultController extends Controller
              );
          }
 
-         //return new Response($product->getName());
+         
          // ... do something, like pass the $product object into a template
 
          return $this->render('default/show.html.twig', array ('currency' => $currency));
     }
 
 
+    //Update function to prices and currencies
+     public function updateCurrencyAction($currencyId)
+     {
+     $em = $this->getDoctrine()->getManager();
+     $currency = $em->getRepository(Currency::class)->find($currencyId);
 
-    // public function updateAction($productId)
-    // {
-    // $em = $this->getDoctrine()->getManager();
-    // $product = $em->getRepository(Product::class)->find($productId);
+     if (!$currency) {
+         throw $this->createNotFoundException(
+             'No currency found for id '.$currencyId
+         );
+     }
 
-    // if (!$product) {
-    //     throw $this->createNotFoundException(
-    //         'No product found for id '.$productId
-    //     );
-    // }
+     $currency->setBaseName('EURO');
+     $em->flush();
 
-    // $product->setName('NEWKEYBOARD');
-    // $em->flush();
-
-    // return $this->redirectToRoute('homepage');
-    // }
+     return $this->redirectToRoute('homepage');
+     }
 }
