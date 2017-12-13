@@ -3,29 +3,24 @@
 {% block body %}
     <div id="wrapper">
         <div id="container">
-            <div id="welcome">
-                <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
-            </div>
-
-            <div id="status">
-                <p>
-                    Add your pair of currencies now <a href={{path("new")}}>ADD</a>
-                </p>
-            </div>
-
-            <div id="status">
-                <p>
-                    Calculate your currency now <a href={{path("calculate")}}>Calculate</a>
-                </p>
-            </div>
-
-            <div id="status">
-                <p>
-                    <a href={{path("table_currencies")}}>Go to our supported Currencies Page</a>
-                </p>
-            </div>
-
-
+            <table style="width:100%">
+              <tr>
+                <th>No</th>
+                <th>Base Currency</th> 
+                <th>Target Currency</th>
+                <th>Price of pair</th>
+              </tr>
+              {% for i in currency %}
+              <tr>
+                <td>{{i.getId}}</td>
+                <td>{{i.getBaseName}}</td> 
+                <td>{{ i.getTargetName }}</td>
+                <td>{{i.getTargetPrice}}</td>
+                <td><button class="deleteBtn" value={{i.getId}}>DELETE</button></td>
+                <td><button class="redirectToUpdate" value={{i.getId}}><a href={{ path("edit", { 'id': i.getId }) }}>EDIT</a></button></td>
+              </tr>
+              {% endfor %}
+            </table>
         </div>
     </div>
 {% endblock %}

@@ -70,33 +70,15 @@ class DefaultController extends Controller
     }
 
 
-    //Update function to prices and currencies
-     public function updateCurrencyAction($currencyId)
-     {
-     $em = $this->getDoctrine()->getManager();
-     $currency = $em->getRepository(Currency::class)->find($currencyId);
 
-     if (!$currency) {
-         throw $this->createNotFoundException(
-             'No currency found for id '.$currencyId
-         );
-     }
-     $currency->setBaseName('EURO');
-     $em->flush();
-     return $this->redirectToRoute('homepage');
-     }
-
-
-    //Form submit user's input
+    //Form to submit user's input
     public function newAction(Request $request)
-    {      //render to new form page
+    {      
         return $this->render('default/new.html.twig');
     }
 
 
-
-
-    //Show dropdaown menu with supported prices
+    //Show dropdown menu with supported prices
     public function calculatorAction(Request $request)
     {      //render to new form page
         $repository = $this->getDoctrine()->getRepository(Currency::class);
@@ -118,5 +100,57 @@ class DefaultController extends Controller
         return $this->json(array('result' => $currency->getTargetPrice() * $amount));
 
         }
+
+
+
+    //Show dropdown menu with supported prices
+    public function tableAction(Request $request)
+    {      //render to new form page
+        $repository = $this->getDoctrine()->getRepository(Currency::class);
+        $currency = $repository->findAll();
+
+        return $this->render('default/table.html.twig', $currency = array('currency' => $currency ));
+    }
+
+
+    //Delete table row action after find
+    public function deleteTableAction(Request $request)
+    {     
+        //first we find the db row table to delete
+        $rowtoDelete = $request->request->get('id');
+        $repository = $this->getDoctrine()->getRepository(Currency::class);
+        $currency = $repository->find($rowtoDelete);
+        //then we apply entity manager get manager to delete
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($currency);
+        $em->flush();
+
+        return $this->json(array('result'=>"ok" ));
+    }
+
+    public function editAction(Request $request)
+         {//query because of get 
+        $rowtoDelete = $request->query->get('id');
+        $repository = $this->getDoctrine()->getRepository(Currency::class);
+        $currency = $repository->find($rowtoDelete);
+         return $this->render('default/update.html.twig', array ('currency' => $currency));
+    }
+
+
+    //Update function to prices and currencies(NOT FIXED YET)
+     public function updateAction($currencyId)
+     {
+     $em = $this->getDoctrine()->getManager();
+     $currency = $em->getRepository(Currency::class)->find($currencyId);
+
+     if (!$currency) {
+         throw $this->createNotFoundException(
+             'No currency found for id '.$currencyId
+         );
+     }
+     $currency->setBaseName('EURO');
+     $em->flush();
+     return $this->redirectToRoute('homepage');
+     }
 
 }

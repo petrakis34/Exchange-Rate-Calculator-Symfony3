@@ -20,12 +20,24 @@ new:
 
 calculator:
     path: calculator
-    defaults: { 
-                _controller: AppBundle:Default:calculator
-              }
+    defaults: { _controller: AppBundle:Default:calculator }
 
 calculate:
     path: calculate
-    defaults: { 
-                _controller: AppBundle:Default:calculate
-              }
+    defaults: { _controller: AppBundle:Default:calculate }
+
+table_currencies:
+  path: table
+  defaults: { _controller: AppBundle:Default:table}
+
+delete_currencies:
+  path: delete
+  defaults: { _controller: AppBundle:Default:deleteTable}
+
+edit:
+  path: edit
+  defaults: { _controller: AppBundle:Default:edit}
+
+update:
+  path: update
+  defaults: { _controller: AppBundle:Default:update}

@@ -16,7 +16,7 @@ $(document).ready(function(){
             success: function(data){ 
                 var result = data.result;
                 var $el = $('.showResult');
-                $el.text(result);
+                $el.text(result.toFixed(2));
                 $el.show();
             },
             error:function(data){
@@ -24,4 +24,26 @@ $(document).ready(function(){
             }
         });
     });
+
+    //Delete articles
+    $(".deleteBtn").click(function(){ 
+
+       var currencyId = $(this).val();
+        
+           $.ajax({
+              url:"delete",
+              method:"POST",
+              data:{
+                  id:currencyId
+              },
+              success:function(data){  
+                window.location.reload();
+              },
+              error:function(data){
+                alert(data);
+              }
+           });
+        });
+
+
 })
