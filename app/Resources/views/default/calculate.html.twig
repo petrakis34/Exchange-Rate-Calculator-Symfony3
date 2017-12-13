@@ -8,18 +8,20 @@
             </div>
 
             <div id="status">
-                <p>
-                    Add your pair of currencies now <a href={{path("new")}}>ADD</a>
-                </p>
+                <h2>Calculate your Currency</h2>
+                <form class="calcForm">
+                    <p>Enter the amount you want to convert</p>
+                    <input type="text" id="valuePrice">
+                    <select id="cur_select">
+                    {% for i in currency %}
+                        <option value={{i.getId}}>{{ i.getTargetName }}-{{i.getBaseName}}</option>
+                    {% endfor %}
+                    </select>
+                    <button id="calculateBtn">Calculate Amount</button>
+                </form>
             </div>
 
-            <div id="status">
-                <p>
-                    Calculate your currency now <a href={{path("calculate")}}>Calculate</a>
-                </p>
-            </div>
-
-
+            <div><p>Result<span class="showResult"></span></p></div>
         </div>
     </div>
 {% endblock %}
@@ -40,7 +42,7 @@
     #welcome h1 span { display: block; font-size: 75%; }
     #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
     #icon-book { display: none; }
-
+    .showResult { display: none;}
     @media (min-width: 768px) {
         #wrapper { width: 80%; margin: 2em auto; }
         #icon-book { display: inline-block; }

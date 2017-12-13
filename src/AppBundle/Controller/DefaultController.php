@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Currency;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 
 class DefaultController extends Controller
@@ -31,7 +33,7 @@ class DefaultController extends Controller
         $baseCurrency = $request->request->get('baseCurrency');
         $targetCurrency = $request->request->get('targetCurrency');
         $targetPair = $request->request->get('targetPair');
-        
+
         $em = $this->getDoctrine()->getManager();
 
         $currency = new Currency();
@@ -49,14 +51,6 @@ class DefaultController extends Controller
         return $this->redirectToRoute('homepage');
     }
 
-    // if you have multiple entity managers, use the registry to fetch them
-    // public function editAction()
-    // {
-    //     $doctrine = $this->getDoctrine();
-    //     $em = $doctrine->getManager();
-    //     $em2 = $doctrine->getManager('other_connection');
-    // }
-
 
     // Show Currency pair
     public function showCurrencyAction($currencyId)
@@ -70,8 +64,6 @@ class DefaultController extends Controller
                  'No product found for id '.$currencyId
              );
          }
-
-         
          // ... do something, like pass the $product object into a template
 
          return $this->render('default/show.html.twig', array ('currency' => $currency));
@@ -89,10 +81,8 @@ class DefaultController extends Controller
              'No currency found for id '.$currencyId
          );
      }
-
      $currency->setBaseName('EURO');
      $em->flush();
-
      return $this->redirectToRoute('homepage');
      }
 
@@ -102,4 +92,31 @@ class DefaultController extends Controller
     {      //render to new form page
         return $this->render('default/new.html.twig');
     }
+
+
+
+
+    //Show dropdaown menu with supported prices
+    public function calculatorAction(Request $request)
+    {      //render to new form page
+        $repository = $this->getDoctrine()->getRepository(Currency::class);
+        $currency = $repository->findAll();
+
+        return $this->render('default/calculate.html.twig', $currency = array('currency' => $currency ));
+    }
+
+
+    //Calculate Prices
+    public function calculateAction(Request $request)
+    { 
+        $amount = $request->request->get('amount');
+        $id = $request->request->get('currency_id');
+
+        $repository = $this->getDoctrine()->getRepository(Currency::class);
+        $currency = $repository->find($id);
+
+        return $this->json(array('result' => $currency->getTargetPrice() * $amount));
+
+        }
+
 }
