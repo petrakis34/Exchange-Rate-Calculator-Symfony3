@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+
 
 {% block body %}
     <div id="wrapper">
@@ -7,12 +7,17 @@
                 <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
             </div>
 
-            <div id="status">
-                <p>
-                    Add your pair of currencies now <a href="/exchange_rate/web/app_dev.php/new">ADD</a>
-                </p>
+            <div>
+                <form action={{path("create_currency")}} method="post">
+                    <p>Enter the Base Currency</p>
+                    <input type="text" name="baseCurrency">
+                    <p>Enter the Target Currency</p>
+                    <input type="text" name="targetCurrency">
+                    <p>enter the Pair Exchange rate</p>
+                    <input type="text" name="targetPair"><br><br>
+                    <button type="submit">CREATE PAIR</button>
+                </form>
             </div>
-
         </div>
     </div>
 {% endblock %}

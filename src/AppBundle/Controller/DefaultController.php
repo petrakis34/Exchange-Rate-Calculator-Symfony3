@@ -25,25 +25,28 @@ class DefaultController extends Controller
     }
 
     //Create Currency pair
-        public function createCurrencyAction()
-    {
-        // you can fetch the EntityManager via $this->getDoctrine()
-        // or you can add an argument to your action: createAction(EntityManagerInterface $em)
+        public function createCurrencyAction(Request $request)
+    {   
+
+        $baseCurrency = $request->request->get('baseCurrency');
+        $targetCurrency = $request->request->get('targetCurrency');
+        $targetPair = $request->request->get('targetPair');
+        
         $em = $this->getDoctrine()->getManager();
 
         $currency = new Currency();
-        $currency->setBaseName('EURO');
-        $currency->setTargetName('USD');
-        $currency->setTargetPrice(1.2079);
+        $currency->setBaseName($baseCurrency);
+        $currency->setTargetName($targetCurrency);
+        $currency->setTargetPrice($targetPair);
 
 
-        // tells Doctrine you want to (eventually) save the Product (no queries yet)
+        //tells Doctrine you want to save data 
         $em->persist($currency);
 
-        // actually executes the queries (i.e. the INSERT query)
+        //actually executes the queries
         $em->flush();
 
-        return new Response('Saved new pair of Currencies with id '.$currency->getId());
+        return $this->redirectToRoute('homepage');
     }
 
     // if you have multiple entity managers, use the registry to fetch them
@@ -92,4 +95,11 @@ class DefaultController extends Controller
 
      return $this->redirectToRoute('homepage');
      }
+
+
+    //Form submit user's input
+    public function newAction(Request $request)
+    {      //render to new form page
+        return $this->render('default/new.html.twig');
+    }
 }
