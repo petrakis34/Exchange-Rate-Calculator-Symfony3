@@ -46,7 +46,7 @@ class DefaultController extends Controller
         //actually executes the queries
         $em->flush();
 
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('table_currencies');
     }
 
 
@@ -167,7 +167,7 @@ class DefaultController extends Controller
         //actually executes the queries
         $em->flush();
 
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('table_currencies');
     }
 
 }
