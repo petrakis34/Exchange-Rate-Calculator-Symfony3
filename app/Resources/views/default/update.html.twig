@@ -8,20 +8,23 @@
         <h2 class="text-center text-lg text-uppercase my-0">Create your pair of Currencies</h2>
         <hr class="divider">
 
-        <form action={{path("update")}} method="post">
+        <form action={{path("update")}} method="post" data-toggle="validator">
           <div class="row">
             <div class="form-group col-lg-4">
               <input type="text" name="currencyId" value="{{currency.getId}}" style="display:none;">
               <label class="text-heading text-primary">Your Base Currency now is: {{currency.getBaseName}}</label>
-              <input type="text" placeholder="Change it to.." class="form-control" name="baseCurrency">
+              <input type="text" placeholder="Change it to.." class="form-control inputCur" name="baseCurrency" pattern="[a-zA-Z]{3}" required>
+              <p class="error1 text-danger"> </p>
             </div>
             <div class="form-group col-lg-4">
               <label class="text-heading text-primary">Your Target Currency now is: {{currency.getTargetName}}</label>
-              <input type="text" placeholder="Change it to.." class="form-control" name="targetCurrency">
+              <input type="text" placeholder="Change it to.." class="form-control inputCur" name="targetCurrency" required>
+              <p class="error1 text-danger"> </p>
             </div>
             <div class="form-group col-lg-4">
               <label class="text-heading text-primary">Your Pair Exchange rate now is: {{currency.getTargetPrice}}</label>
-              <input type="text" placeholder="Change it to.." class="form-control" name="targetPair">
+              <input type="text" placeholder="Change it to eg 123.1212.." class="form-control inputRate" name="targetPair" required>
+              <p class="error2 text-danger"> </p>
             </div>
 
             <div class="clearfix"></div>

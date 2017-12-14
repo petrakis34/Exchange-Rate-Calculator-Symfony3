@@ -7,11 +7,12 @@
         <hr class="divider">
         <h2 class="text-center text-lg text-uppercase my-0">Calculate your Currency</h2>
         <hr class="divider">
-        <form class="calcForm">
+        <form class="calcForm" data-toggle="validator">
           <div class="row">
             <div class="form-group col-lg-4">
               <label class="text-heading">Enter the amount you want to convert</label>
-              <input type="text" placeholder="Enter the amount Here.." class="form-control" id="valuePrice">
+              <input type="text" placeholder="Enter the amount Here.." class="form-control amountMon" id="valuePrice" required>
+              <p class="error3 text-danger"> </p>
             </div>
             <div class="form-group col-lg-4">
                 <label class="text-heading">Select the pair of Currencies</label>
