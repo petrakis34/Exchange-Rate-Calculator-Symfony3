@@ -1,60 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
-            </div>
 
-            <div id="status">
-                <p>
-                    Add your pair of currencies now <a href={{path("new")}}>ADD</a>
-                </p>
-            </div>
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>About the Calculator</h2>
+            <p class="lead">This is a Calculator to Create currency pairs, Delete them, Update them and of course calculate your desired amount of money.</p>
+            <ul>
+              <li>Calculate any amount of price from the stored exchange rates</li>
+              <li>Create Exchange rate pairs</li>
+              <li>Delete them</li>
+              <li>And edit any pair you wish</li>
+            </ul>
 
-            <div id="status">
-                <p>
-                    Calculate your currency now <a href={{path("calculate")}}>Calculate</a>
-                </p>
-            </div>
-
-            <div id="status">
-                <p>
-                    <a href={{path("table_currencies")}}>Go to our supported Currencies Page</a>
-                </p>
-            </div>
-
-
+            <p class="lead">So Navigate through the main menu to perform what you like or Click to <a href={{path("calculator")}}>Calculate</a> or to go to our supported <a href={{path("table_currencies")}}>Currencies Page</a> or to <a href={{path("new")}}>Create</a> one.</p> 
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
 {% endblock %}
 
-{% block stylesheets %}
-<style>
-    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
-    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
-    h1 { font-size: 36px; }
-    h2 { font-size: 21px; margin-bottom: 1em; }
-    p { margin: 0 0 1em 0; }
-    a { color: #0000F0; }
-    a:hover { text-decoration: none; }
-    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
-    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
-    #container { padding: 2em; }
-    #welcome, #status { margin-bottom: 2em; }
-    #welcome h1 span { display: block; font-size: 75%; }
-    #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
-    #icon-book { display: none; }
-
-    @media (min-width: 768px) {
-        #wrapper { width: 80%; margin: 2em auto; }
-        #icon-book { display: inline-block; }
-        #status a, #next a { display: block; }
-
-        @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
-    }
-</style>
-{% endblock %}

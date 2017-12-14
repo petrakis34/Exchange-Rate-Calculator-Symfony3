@@ -1,56 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
-            </div>
 
-            <div id="status">
-                <h2>Calculate your Currency</h2>
-                <form class="calcForm">
-                    <p>Enter the amount you want to convert</p>
-                    <input type="text" id="valuePrice">
-                    <select id="cur_select">
-                    {% for i in currency %}
-                        <option value={{i.getId}}>{{ i.getTargetName }}-{{i.getBaseName}}</option>
-                    {% endfor %}
-                    </select>
-                    <button id="calculateBtn">Calculate Amount</button>
-                </form>
+    <div class="container">
+     <div class="bg-faded p-4 my-4">
+        <hr class="divider">
+        <h2 class="text-center text-lg text-uppercase my-0">Calculate your Currency</h2>
+        <hr class="divider">
+        <form class="calcForm">
+          <div class="row">
+            <div class="form-group col-lg-4">
+              <label class="text-heading">Enter the amount you want to convert</label>
+              <input type="text" placeholder="Enter the amount Here.." class="form-control" id="valuePrice">
             </div>
+            <div class="form-group col-lg-4">
+                <label class="text-heading">Select the pair of Currencies</label>
+                <select class="form-control" id="cur_select">
+                {% for i in currency %}
+                    <option value={{i.getId}}>{{ i.getTargetName }}-{{i.getBaseName}} at {{i.getTargetPrice}}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-lg-12">
+                <button class="btn btn-lg btn-info" id="calculateBtn">Calculate Amount</button>
+            </div>
+            <div class="form-group col-lg-12">
+                <h5>CONVERTED PRICE:  <span class="showResult text-danger"></span></h5>
+            </div>
+          </div>
+        </form>
+      </div>
 
-            <div><p>Result<span class="showResult"></span></p></div>
-        </div>
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-<style>
-    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
-    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
-    h1 { font-size: 36px; }
-    h2 { font-size: 21px; margin-bottom: 1em; }
-    p { margin: 0 0 1em 0; }
-    a { color: #0000F0; }
-    a:hover { text-decoration: none; }
-    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
-    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
-    #container { padding: 2em; }
-    #welcome, #status { margin-bottom: 2em; }
-    #welcome h1 span { display: block; font-size: 75%; }
-    #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
-    #icon-book { display: none; }
-    .showResult { display: none;}
-    @media (min-width: 768px) {
-        #wrapper { width: 80%; margin: 2em auto; }
-        #icon-book { display: inline-block; }
-        #status a, #next a { display: block; }
-
-        @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
-    }
-</style>
 {% endblock %}

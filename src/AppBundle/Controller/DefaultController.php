@@ -21,9 +21,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        return $this->render('default/index.html.twig');
     }
 
     //Create Currency pair
@@ -88,15 +86,17 @@ class DefaultController extends Controller
     }
 
 
-    //Calculate Prices
+    //Calculate Prices with ajax
     public function calculateAction(Request $request)
     { 
+        //we get with post the user's inputs to calculate
         $amount = $request->request->get('amount');
         $id = $request->request->get('currency_id');
 
         $repository = $this->getDoctrine()->getRepository(Currency::class);
         $currency = $repository->find($id);
 
+        //we make the calculation and send it back
         return $this->json(array('result' => $currency->getTargetPrice() * $amount));
 
         }
@@ -120,6 +120,7 @@ class DefaultController extends Controller
         $rowtoDelete = $request->request->get('id');
         $repository = $this->getDoctrine()->getRepository(Currency::class);
         $currency = $repository->find($rowtoDelete);
+
         //then we apply entity manager get manager to delete
         $em = $this->getDoctrine()->getManager();
         $em->remove($currency);
@@ -128,29 +129,45 @@ class DefaultController extends Controller
         return $this->json(array('result'=>"ok" ));
     }
 
+
+    //edit function to select the pair and redirect to update page
     public function editAction(Request $request)
-         {//query because of get 
-        $rowtoDelete = $request->query->get('id');
+         {
+        //request->query because using GET method to get the id of the pair we selected
+        $rowtoEdit = $request->query->get('id');
         $repository = $this->getDoctrine()->getRepository(Currency::class);
-        $currency = $repository->find($rowtoDelete);
-         return $this->render('default/update.html.twig', array ('currency' => $currency));
+        $currency = $repository->find($rowtoEdit);
+
+        return $this->render('default/update.html.twig', array ('currency' => $currency));
     }
 
 
-    //Update function to prices and currencies(NOT FIXED YET)
-     public function updateAction($currencyId)
-     {
-     $em = $this->getDoctrine()->getManager();
-     $currency = $em->getRepository(Currency::class)->find($currencyId);
+    //Update function to prices and currencies
+     public function updateAction(Request $request)
+     {  
+        // we get the default value of the hidden input field that has the id of our selected currency
+        // and the rest of the users input fields with post
+        $currency_id = $request->request->get('currencyId');
+        $baseCurrency = $request->request->get('baseCurrency');
+        $targetCurrency = $request->request->get('targetCurrency');
+        $targetPair = $request->request->get('targetPair');
 
-     if (!$currency) {
-         throw $this->createNotFoundException(
-             'No currency found for id '.$currencyId
-         );
-     }
-     $currency->setBaseName('EURO');
-     $em->flush();
-     return $this->redirectToRoute('homepage');
-     }
+        // we find the particular currency by id
+        $em = $this->getDoctrine()->getManager();
+        $currency = $em->getRepository(Currency::class)->find($currency_id);
+
+        //and we set the new values
+        $currency->setBaseName($baseCurrency);
+        $currency->setTargetName($targetCurrency);
+        $currency->setTargetPrice($targetPair);
+
+        //tells Doctrine you want to save data 
+        $em->persist($currency);
+
+        //actually executes the queries
+        $em->flush();
+
+        return $this->redirectToRoute('homepage');
+    }
 
 }
