@@ -1,4 +1,4 @@
 exchange_rate
 =============
 
-A Symfony project created on December 12, 2017, 10:47 am.
+A Exchange Rate Calculator / Symfony 3.4.1 project.
